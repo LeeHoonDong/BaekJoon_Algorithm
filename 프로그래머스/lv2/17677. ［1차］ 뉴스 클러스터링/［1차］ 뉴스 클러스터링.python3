@@ -1,0 +1,47 @@
+import math
+def find_intersection(arr1,arr2):
+    answer=[]
+    i=0
+    while i<len(arr1):
+        element=arr1.pop(0)
+        element=element.lower()
+        arr1.append(element)
+        i+=1
+    i=0
+    while i<len(arr2):
+        element=arr2.pop(0)
+        element=element.lower()
+        arr2.append(element)
+        i+=1
+    #교집합 구하기
+    while len(arr1)!=0:
+        element1=arr1.pop(0)
+        if element1 in arr2:
+            answer.append(element1)
+            arr2.remove(element1)
+    return answer
+def purify(str):
+    new_arr=[]
+    for i in range(len(str)-1):
+        if 'a'<=str[i]<='z' or 'A'<=str[i]<='Z':
+            if 'a'<=str[i+1]<='z' or 'A'<=str[i+1]<='Z':
+                new_arr.append(str[i:i+2])
+    return new_arr
+
+def solution(str1, str2):
+    answer = 0
+    str1_arr1=purify(str1)
+    str2_arr2=purify(str2)
+    #print(str1_arr1,str2_arr2)
+    union=len(str1_arr1)+len(str2_arr2)
+    intersection=find_intersection(str1_arr1,str2_arr2)
+    union-=len(intersection)
+    #print(intersection)
+    #print(union)
+    if union==0:
+        answer=65536
+    else:
+        answer=len(intersection)/union*65536
+        answer=math.floor(answer)
+    #print(answer)
+    return answer
