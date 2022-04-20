@@ -1,0 +1,20 @@
+def solution(id_list, reports, k):
+    answer = []
+    report_dict={}
+    for report in reports:
+        a=report.split()
+        to_who=a[0]
+        who_from=a[1]
+        if who_from in report_dict:
+            if to_who not in report_dict[who_from]:
+                report_dict[who_from].append(to_who)
+        else:
+            report_dict[who_from]=[to_who]
+    for id in id_list:
+        count=0
+        for item in report_dict.values():
+            if len(item)>=k:
+                if id in item:
+                    count+=1
+        answer.append(count)
+    return answer
