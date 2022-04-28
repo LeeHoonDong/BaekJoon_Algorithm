@@ -1,0 +1,19 @@
+def solution(s):
+    stack=[]
+    index=-1
+    count=0
+    for i in s:
+        if len(stack)==0 or stack[index]!=i:
+            stack.append(i)
+            index+=1
+        elif stack[index]==i:
+            stack.pop()
+            index-=1
+            count+=1
+    if count==0:
+        return 0
+    else:
+        if len(stack)==0:
+            return 1
+        else:
+            return 0
