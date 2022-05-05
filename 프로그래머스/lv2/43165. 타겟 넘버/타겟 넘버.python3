@@ -8,7 +8,8 @@ def dfs(i,result,numbers,target,length):
     dfs(i+1,result+numbers[i],numbers,target,length)
     dfs(i+1,result-numbers[i],numbers,target,length)
 
-def solution(numbers, target):
+def solution(numbers,target):
     global count
     dfs(0,0,numbers,target,len(numbers))
+
     return count
