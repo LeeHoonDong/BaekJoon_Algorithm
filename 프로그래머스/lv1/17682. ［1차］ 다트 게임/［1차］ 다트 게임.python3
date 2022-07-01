@@ -1,0 +1,30 @@
+def solution(dartResult):
+    answer = 0
+    num=''
+    result=[]
+    count=0
+    for dr in dartResult:
+        if dr=='S' or dr=='D' or dr=='T':
+            if dr=='S':
+                result.append(int(num))
+            elif dr=='D':
+                result.append(int(num)*int(num))
+            else: #dr=='T'
+                result.append(int(num)*int(num)*int(num))
+            count+=1
+            num=''
+        elif dr=='*' or dr=='#':
+            if dr=='*':
+                if count>=2:
+                    for i in range(count-2,count):
+                        result[i]*=2
+                else: #count<2
+                    new_num=result.pop()
+                    result.append(new_num*2)
+            else:
+                new_num=result.pop()
+                result.append(new_num*(-1))
+        else:
+            num+=dr
+    answer=sum(result)
+    return answer
