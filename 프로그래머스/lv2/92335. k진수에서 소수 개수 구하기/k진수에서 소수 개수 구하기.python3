@@ -1,0 +1,33 @@
+def check(arr):
+    count=0
+    for num in arr:
+        if num!=1:
+            flag=0
+            for i in range(2,int(num**0.5)+1):
+                if num%i==0:
+                    flag=1
+                    break
+            if flag==0:
+                count+=1
+    return count
+def solution(n, k):
+    answer = -1
+    result=[]
+    while n>k:
+        a=n%k
+        result.append(a)
+        n=n//k
+    result.append(n)
+    result.reverse()
+    num=''
+    for i in result:
+        num+=str(i)
+    arr=num.split('0')
+    arr1=[]
+    for i in arr:
+        if i!='1':
+            if i!='':
+                arr1.append(int(i))
+    print(arr1)
+    answer=check(arr1)
+    return answer
