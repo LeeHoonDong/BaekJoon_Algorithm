@@ -1,0 +1,23 @@
+#arr1과 arr2에서 숫자 하나씩 넘겨가지고 이진수로 계산한 것을 반환하자
+def convert_binary(n,num):
+    arr=[0]*n
+    index=n-1
+    while num>1:
+        arr[index]=num%2
+        num=num//2
+        index-=1
+    arr[index]=num
+    return arr
+def solution(n, arr1, arr2):
+    answer = []
+    for a,b in zip(arr1,arr2):
+        result=''
+        new_arr1=convert_binary(n,a)
+        new_arr2=convert_binary(n,b)
+        for i in range(n):
+            if new_arr1[i]==0 and new_arr2[i]==0:
+                result+=' '
+            else:
+                result+='#'
+        answer.append(result)
+    return answer
