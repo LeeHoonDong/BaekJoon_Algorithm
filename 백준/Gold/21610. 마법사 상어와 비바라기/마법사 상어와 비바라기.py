@@ -1,68 +1,50 @@
-n, m = map(int, input().split())
+dx=[0,0,-1,-1,-1,0,1,1,1]
+dy=[0,-1,-1,0,1,1,1,0,-1]
+#대각선 위치 확인
+cx=[-1,-1,+1,+1]
+cy=[-1,+1,+1,-1]
+def solution(N,M,arr,moves):
+    answer=0
+    cloud=[[N-1,0],[N-1,1],[N-2,0],[N-2,1]]
 
-
-arr = [list(map(int, input().split())) for _ in range(n)]
-moves = []
-for i in range(m):
-    tmp = list(map(int, input().split()))
-    moves.append([tmp[0] - 1, tmp[1]])
-
-clouds = [[n-2, 0], [n-2, 1], [n-1, 0], [n-1, 1]]
-
-dx = [0, -1, -1, -1, 0, 1, 1, 1]
-dy = [-1, -1, 0, 1, 1, 1, 0, -1]
-for i in range(m):
-    # step 1.
-    # 이동
-    move = moves[i]
-    next_clouds = []
-    for cloud in clouds:
-        x = cloud[0]
-        y = cloud[1]
-        d = move[0]
-        s = move[1]
-        nx = (n + x + dx[d] * s) % n
-        ny = (n + y + dy[d] * s) % n
-        next_clouds.append([nx, ny])
-
-    # step 2.
-    visited = [[False]* n for _ in range(n)]
-    for cloud in next_clouds:
-        x = cloud[0]
-        y = cloud[1]
-        arr[x][y] += 1
-        visited[x][y] = True
-    
-    # step 3
-    clouds = []
-
-    # step 4
-    cx = [-1, -1, 1, 1]
-    cy = [-1, 1, -1, 1]
-    for cloud in next_clouds:
-        x = cloud[0]
-        y = cloud[1]
-        count = 0
-        for i in range(4):
-            nx = x + cx[i]
-            ny = y + cy[i]
-
-            if 0 <= nx < n and 0<= ny < n and arr[nx][ny] >= 1:
-                count += 1
-
-        arr[x][y] += count
-        
-    # step 5
-
-    for i in range(n):
-        for j in range(n):
-            if arr[i][j] >= 2 and visited[i][j] == False:
-                arr[i][j] -= 2
-                clouds.append([i, j])
-
-ans = 0
-for i in range(n):
-    ans += sum(arr[i])
-
-
-print(ans)
+    for d,s in moves:
+        visited = [[False] * N for _ in range(N)]
+        new_cloud = []
+        # 구름 이동
+        for r,c in cloud:
+            new_r=(N+r+dx[d]*s)%N
+            new_c=(N+c+dy[d]*s)%N
+            new_cloud.append([new_r,new_c])
+        #비뿌려
+        for r,c in new_cloud:
+            arr[r][c]+=1
+            visited[r][c]=True
+        #비 뿌린 칸의 대각선 위치 확인해서 0이 아닌 것의 갯수만큼 값 증가
+        for r,c in new_cloud:
+            count=0
+            for index in range(4):
+                new_r=r+cx[index]
+                new_c=c+cy[index]
+                if 0<=new_r<N and 0<=new_c<N:
+                    if arr[new_r][new_c]!=0:
+                        count+=1
+            arr[r][c]+=count
+        #구름 위치= 이전 구름 위치가 아닌 것 중에 2 이상인 것
+        cloud=[]
+        for i in range(N):
+            for j in range(N):
+                if arr[i][j]>=2 and visited[i][j]==False:
+                    cloud.append([i,j])
+                    arr[i][j]-=2
+    for i in range(N):
+        answer+=sum(arr[i])
+    return answer
+if __name__ == '__main__':
+    N,M=map(int,input().split())
+    arr=[]
+    for i in range(N):
+        arr.append(list(map(int,input().split())))
+    moves=[]
+    for i in range(M):
+        moves.append(list(map(int,input().split())))
+    print(solution(N,M,arr,moves))
