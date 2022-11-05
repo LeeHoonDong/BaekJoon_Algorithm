@@ -1,5 +1,3 @@
-#N개의 동전 종류, 금액 M 거슬러 주기
-#최대로 거슬러주기
 import sys
 input=sys.stdin.readline
 def solution(N,M,arr):
