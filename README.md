@@ -1,1 +1,1 @@
-## BaekJoon&Programmers
+## Study_Algorithm
